@@ -4,8 +4,9 @@ import (
 	"runtime"
 
 	"github.com/faiface/mainthread"
-	"github.com/go-gl/gl/v3.3-core/gl"
+	"github.com/go-gl/gl/v4.4-core/gl"
 	"github.com/go-gl/mathgl/mgl32"
+	"github.com/pkg/errors"
 )
 
 // Texture is an OpenGL texture.
@@ -81,9 +82,9 @@ func (t *Texture) Height() int {
 }
 
 // SetPixels sets the content of a sub-region of the Texture. Pixels must be an RGBA byte sequence.
-func (t *Texture) SetPixels(x, y, w, h int, pixels []uint8) {
+func (t *Texture) SetPixels(x, y, w, h int, pixels []uint8) error {
 	if len(pixels) != w*h*4 {
-		panic("set pixels: wrong number of pixels")
+		return errors.New("set pixels: wrong number of pixels")
 	}
 	gl.TexSubImage2D(
 		gl.TEXTURE_2D,
@@ -96,6 +97,7 @@ func (t *Texture) SetPixels(x, y, w, h int, pixels []uint8) {
 		gl.UNSIGNED_BYTE,
 		gl.Ptr(pixels),
 	)
+	return nil
 }
 
 // Pixels returns the content of a sub-region of the Texture as an RGBA byte sequence.
@@ -146,3 +148,17 @@ func (t *Texture) Begin() {
 func (t *Texture) End() {
 	t.tex.restore()
 }
+
+const DefaultTextureShader = `
+#version 440 core
+
+in vec2 Texture;
+
+out vec4 color;
+
+uniform sampler2D tex;
+
+void main() {
+	color = texture(tex, Texture);
+}
+`

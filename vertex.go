@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	"github.com/faiface/mainthread"
-	"github.com/go-gl/gl/v3.3-core/gl"
+	"github.com/go-gl/gl/v4.4-core/gl"
 	"github.com/pkg/errors"
 )
 
@@ -28,15 +28,15 @@ type VertexSlice struct {
 //
 // Note, that a vertex array is specialized for a specific shader and can't be used with another
 // shader.
-func MakeVertexSlice(shader *Shader, len, cap int) *VertexSlice {
+func MakeVertexSlice(shader *Shader, len, cap int) (*VertexSlice, error) {
 	if len > cap {
-		panic("failed to make vertex slice: len > cap")
+		return nil, errors.New("failed to make vertex slice: len > cap")
 	}
 	return &VertexSlice{
 		va: newVertexArray(shader, cap),
 		i:  0,
 		j:  len,
-	}
+	}, nil
 }
 
 // VertexFormat returns the format of vertex attributes inside the underlying vertex array of this
@@ -125,12 +125,13 @@ func (vs *VertexSlice) Slice(i, j int) *VertexSlice {
 // Slice.
 //
 // If the length of vertices does not match the length of the VertexSlice, this methdo panics.
-func (vs *VertexSlice) SetVertexData(data []float32) {
+func (vs *VertexSlice) SetVertexData(data []float32) error {
 	if len(data)/vs.Stride() != vs.Len() {
 		fmt.Println(len(data)/vs.Stride(), vs.Len())
-		panic("set vertex data: wrong length of vertices")
+		return errors.New("set vertex data: wrong length of vertices")
 	}
 	vs.va.setVertexData(vs.i, vs.j, data)
+	return nil
 }
 
 // VertexData returns the contents of the VertexSlice.
@@ -282,4 +283,25 @@ func (va *vertexArray) vertexData(i, j int) []float32 {
 	data := make([]float32, (j-i)*va.stride/4)
 	gl.GetBufferSubData(gl.ARRAY_BUFFER, i*va.stride, len(data)*4, gl.Ptr(data))
 	return data
+}
+
+const (
+	DefaultVertexShader = `
+#version 440 core
+
+in vec2 position;
+in vec2 texture;
+
+out vec2 Texture;
+
+void main() {
+	gl_Position = vec4(position, 0.0, 1.0);
+	Texture = texture;
+}
+`
+)
+
+var DefaultVertexFormat = AttrFormat{
+	{Name: "position", Type: Vec2},
+	{Name: "texture", Type: Vec2},
 }

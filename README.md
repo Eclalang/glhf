@@ -1,10 +1,16 @@
-# glhf [![GoDoc](https://godoc.org/github.com/faiface/glhf?status.svg)](http://godoc.org/github.com/faiface/glhf) [![Report card](https://goreportcard.com/badge/github.com/faiface/glhf)](https://goreportcard.com/report/github.com/faiface/glhf)
+# glhf [![GoDoc](https://godoc.org/github.com/tot0p/glhf?status.svg)](http://godoc.org/github.com/tot0p/glhf) [![Report card](https://goreportcard.com/badge/github.com/faiface/glhf)](https://goreportcard.com/report/github.com/faiface/glhf)
 
 open**GL** **H**ave **F**un - A Go package that makes life with OpenGL enjoyable.
 
 ```
-go get github.com/faiface/glhf
+go get github.com/tot0p/glhf
 ```
+
+Is a **Fork** of [faiface/glhf](https://www.github.com/tot0p/glhf) with some changes :
+
+- opengl 3.3 -> 4.4
+- best cuttings of the code
+- modified error handling
 
 ## Main features
 
@@ -163,8 +169,8 @@ for !shouldQuit {
 
 ### Which version of OpenGL does GLHF use?
 
-It uses OpenGL 3.3 and uses
-[`github.com/go-gl/gl/v3.3-core/gl`](https://github.com/go-gl/gl/tree/master/v3.3-core/gl).
+It uses OpenGL 4.4 and uses
+[`github.com/go-gl/gl/v4.4-core/gl`](https://github.com/go-gl/gl/tree/master/v4.4-core/gl).
 
 ### Why do I have to use `github.com/faiface/mainthread` package with GLHF?
 
@@ -184,7 +190,7 @@ pull request.
 ### Does GLHF create windows for me?
 
 No. You have to use another library for windowing, e.g.
-[github.com/go-gl/glfw/v3.2/glfw](https://github.com/go-gl/glfw/tree/master/v3.2/glfw).
+[github.com/go-gl/glfw/v3.3/glfw](https://github.com/go-gl/glfw/tree/master/v3.3/glfw).
 
 ### Why no tests?
 
