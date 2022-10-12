@@ -160,11 +160,10 @@ func (s *Shader) UniformFormat() AttrFormat {
 // No other types are supported.
 //
 // The Shader must be bound before calling this method.
-func (s *Shader) SetUniformAttr(uniform int, value interface{}) (ok bool) {
+func (s *Shader) SetUniformAttr(uniform int, value interface{}) bool {
 	if s.uniformLoc[uniform] < 0 {
 		return false
 	}
-
 	switch s.uniformFmt[uniform].Type {
 	case Int:
 		value := value.(int32)
@@ -211,7 +210,6 @@ func (s *Shader) SetUniformAttr(uniform int, value interface{}) (ok bool) {
 	default:
 		panic("set uniform attr: invalid attribute type")
 	}
-
 	return true
 }
 
