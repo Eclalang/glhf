@@ -1,4 +1,4 @@
-# glhf [![GoDoc](https://godoc.org/github.com/tot0p/glhf?status.svg)](http://godoc.org/github.com/tot0p/glhf) [![Report card](https://goreportcard.com/badge/github.com/faiface/glhf)](https://goreportcard.com/report/github.com/faiface/glhf)
+# glhf [![GoDoc](https://godoc.org/github.com/tot0p/glhf?status.svg)](http://godoc.org/github.com/tot0p/glhf) [![Report card](https://goreportcard.com/badge/github.com/tot0p/glhf)](https://goreportcard.com/report/github.com/tot0p/glhf)
 
 open**GL** **H**ave **F**un - A Go package that makes life with OpenGL enjoyable.
 
