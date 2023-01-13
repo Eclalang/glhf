@@ -1,4 +1,4 @@
-module github.com/tot0p/glhf
+module github.com/Eclalang/glhf
 
 go 1.16
 
